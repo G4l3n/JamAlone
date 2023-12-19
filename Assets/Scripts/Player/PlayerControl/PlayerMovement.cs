@@ -10,12 +10,15 @@ public class PlayerMovement : MonoBehaviour
 
 
     public float groundDrag;
+    public Transform playerTransform;
+    public Transform playerCamTransform;
 
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
     private bool grounded;
+
 
 
     public Transform orientation;
@@ -26,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+    public bool isTalking;
+
+
 
 
     void Start()
@@ -38,7 +44,18 @@ public class PlayerMovement : MonoBehaviour
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
+        playerTransform.rotation = playerCamTransform.rotation;
+
         SpeedControl();
+
+        if (Input.GetKeyDown("e"))
+        {
+            isTalking = true;
+        }
+        else
+        {
+            isTalking = false;
+        }
 
         MyInput();
 
@@ -82,6 +99,4 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
     }
-
-
 }
